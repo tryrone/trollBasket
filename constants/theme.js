@@ -48,3 +48,19 @@ export const SIZES = {
   width,
   height,
 };
+export const CITIES = [
+  'Clear filter',
+  'Lagos',
+  'Abuja',
+  'Owerri',
+  'Ilorin',
+  'Ibadan',
+  'Kano',
+  'Kaduna',
+  'Warri',
+  'Benin',
+  'Enugu',
+  'Cross-River',
+  'Abeokuta',
+  'Anambra',
+];

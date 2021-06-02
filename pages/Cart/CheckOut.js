@@ -32,11 +32,15 @@ const style = require('./cartStyle');
          text="Checkout"
          textColor="white"
          onButtonClick={() => {
-           deleteFromCart([]);
-           navigation.reset({
-             index: 0,
-             routes: [{ name: 'CheckoutPage' }],
-           });
+           if(cartData.length == 0){
+              console.log('empty cart...');
+           }else{
+             deleteFromCart([]);
+             navigation.reset({
+               index: 0,
+               routes: [{ name: 'CheckoutPage' }],
+             });
+           }
          }}
          btnWidth="100%"
          btnColor={COLORS.primary}

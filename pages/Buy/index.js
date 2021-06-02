@@ -1,11 +1,14 @@
-import React from 'react'
-import { View, Text, TouchableOpacity, Image,Dimensions,ScrollView,TouchableWithoutFeedback } from 'react-native';
+import React,{useState} from 'react'
+import { View, Text, TouchableOpacity, Image,Dimensions,ScrollView,StatusBar } from 'react-native';
 import CustomSearch from '../../components/CustomSearch';
-import { images } from '../../constants';
+import { COLORS, images } from '../../constants';
 import Categories from './Categories';
 import ContactUs from './ContactUs';
 import Products from './Products';
 import { connect } from 'react-redux';
+import CityDropDown from './CityDropDown';
+import CityModal from './CityModal';
+
 
 
 const style = require('./buyStyle');
@@ -14,20 +17,34 @@ const {height} = Dimensions.get('screen');
 
  function Buy({navigation,cart}) {
    const {cartData} =  cart;
+   const[modalVisible,setModalVisible] = useState(false);
+   const[city,setCity] = useState('');
 
-  
+    
 
       return (
-        <TouchableWithoutFeedback onPress={()=>{}} >
         <View style={style.continer}>
+          <StatusBar backgroundColor={COLORS.primary} />
           <Text style={style.pageTitle}>Trollbasket</Text>
+          {modalVisible && (
+            <CityModal
+              visible={modalVisible}
+              setCity={(val) => {
+                setCity(val);
+              }}
+              setVisible={() => {
+                setModalVisible(false);
+              }}
+            />
+          )}
 
           <View style={style.functionRow}>
-            <TouchableOpacity style={style.clickRow}>
-              <Image source={images.location} style={style.location} />
-              <Text style={style.cityText}>Lagos</Text>
-              <Image source={images.downArrow} style={style.downArrow} />
-            </TouchableOpacity>
+            <CityDropDown
+              city={city}
+              openModal={(val) => {
+                setModalVisible(val);
+              }}
+            />
             <TouchableOpacity style={[style.clickRow, style.sideBorders]}>
               <Image source={images.packageImage} style={style.location} />
               <Text style={style.cityText}>My Orders</Text>
@@ -58,11 +75,10 @@ const {height} = Dimensions.get('screen');
           <Categories />
           <View style={{ height: height * 0.355, marginTop: 24 }}>
             <ScrollView showsVerticalScrollIndicator={false}>
-              <Products navigation={navigation} />
+              <Products city={city} navigation={navigation} />
             </ScrollView>
           </View>
         </View>
-        </TouchableWithoutFeedback>
       );
 }
 const mapStateToProps = state => ({

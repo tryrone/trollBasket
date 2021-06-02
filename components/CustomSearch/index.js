@@ -19,6 +19,7 @@ const KEYS_TO_FILTERS = ['title'];
       const { image, title } = item;
      return (
        <TouchableOpacity onPress={()=>{
+         setSearchText('');
          navigation.navigate('Details',{product:item});
        }} style={style.detailCont}>
          <Image source={{ uri: image }} style={style.image} />

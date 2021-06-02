@@ -1,6 +1,6 @@
 import icons from './icons';
 import images from './images';
-import {FONTS, COLORS,SIZES} from './theme';
+import {FONTS, COLORS,SIZES,CITIES} from './theme';
 
 function moneyFormat(price) {
     const pieces = parseFloat(price).toFixed(2).split('')
@@ -11,4 +11,4 @@ function moneyFormat(price) {
     return  pieces.join('')
   }
 
-export {icons, images, COLORS, FONTS, moneyFormat,SIZES};
+export { icons, images, COLORS, FONTS, moneyFormat, SIZES, CITIES };

@@ -5,41 +5,90 @@ import { FONTS } from '../../../constants';
 
 const {width}  = Dimensions.get('screen');
 
-function Products({ navigation }) {
+function Products({ navigation, city }) {
+  const filteredData = () => {
+  const cityFilter =  productData.filter((product) => product.city == city);
+  return cityFilter;
+  }
   return (
     <View style={style.productWrap}>
-      {productData.map((product) => {
-        return (
-          <TouchableOpacity
-          onPress={()=>{navigation.navigate('Details',{product})}}
-            key={'product' + product.id}
-            style={{ width: 102.61, marginTop: 19 }}
-          >
-            <Image source={{ uri: product.image }} style={style.productImage} />
-            <Text
-              style={style.productTitle}
-              numberOfLines={2}
-              ellipsizeMode="tail"
+      {city.length == 0 &&
+        productData.map((product) => {
+          return (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Details', { product });
+              }}
+              key={'product' + product.id}
+              style={{ width: 102.61, marginTop: 19, marginRight: 14 }}
             >
-              {product.title}
-            </Text>
-            <Text
-              style={style.productPrice}
-              numberOfLines={1}
-              ellipsizeMode="tail"
+              <Image
+                source={{ uri: product.image }}
+                style={style.productImage}
+              />
+              <Text
+                style={style.productTitle}
+                numberOfLines={2}
+                ellipsizeMode="tail"
+              >
+                {product.title}
+              </Text>
+              <Text
+                style={style.productPrice}
+                numberOfLines={1}
+                ellipsizeMode="tail"
+              >
+                ₦{product.price}
+              </Text>
+              <Text
+                style={style.productCategory}
+                numberOfLines={1}
+                ellipsizeMode="tail"
+              >
+                {product.category}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
+
+      {city.length !== 0 &&
+        filteredData().map((product) => {
+          return (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Details', { product });
+              }}
+              key={'product' + product.id}
+              style={{ width: 102.61, marginTop: 19,marginRight:14 }}
             >
-              ₦{product.price}
-            </Text>
-            <Text
-              style={style.productCategory}
-              numberOfLines={1}
-              ellipsizeMode="tail"
-            >
-              {product.category}
-            </Text>
-          </TouchableOpacity>
-        );
-      })}
+              <Image
+                source={{ uri: product.image }}
+                style={style.productImage}
+              />
+              <Text
+                style={style.productTitle}
+                numberOfLines={2}
+                ellipsizeMode="tail"
+              >
+                {product.title}
+              </Text>
+              <Text
+                style={style.productPrice}
+                numberOfLines={1}
+                ellipsizeMode="tail"
+              >
+                ₦{product.price}
+              </Text>
+              <Text
+                style={style.productCategory}
+                numberOfLines={1}
+                ellipsizeMode="tail"
+              >
+                {product.category}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
     </View>
   );
 }
@@ -51,7 +100,7 @@ const style = StyleSheet.create({
   productWrap: {
     paddingHorizontal: 20,
     flexDirection:'row',
-    justifyContent:'space-between',
+    // justifyContent:'space-between',
     alignItems:'center',
     flexWrap:'wrap'
   },
